@@ -1,0 +1,36 @@
+code pour importer fichier CSV EXEMPLE : 
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/table_region2.csv'
+INTO TABLE Region
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(reg_code, reg_nom);
+
+region:
+SELECT d.*
+FROM Departement d
+LEFT JOIN Region r ON d.reg_code = r.reg_code
+WHERE r.reg_code IS NULL;
+
+
+departement
+SELECT c.*
+FROM Commune c
+LEFT JOIN Departement d ON c.dep_code = d.dep_code
+WHERE d.dep_code IS NULL;
+
+
+commune:
+SELECT b.*
+FROM Bien b
+LEFT JOIN Commune c ON b.id_codedep_codecommune = c.id_codedep_codecommune
+WHERE c.id_codedep_codecommune IS NULL;
+
+
+
+bien: 
+SELECT v.*
+FROM Vente v
+LEFT JOIN Bien b ON v.Id_bien = b.Id_bien
+WHERE b.Id_bien IS NULL;

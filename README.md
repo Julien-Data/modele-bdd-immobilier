@@ -1,53 +1,77 @@
-# Projet DATAImmo – Laplace Immo
-Modification et normalisation de la base de données immobilières
+# Projet DATAImmo – Laplace Immo  
+Conception, normalisation et exploitation d’une base de données immobilières
 
 ## 1. Contexte
+Laplace Immo souhaite développer un modèle prédictif capable d’estimer le prix de vente des biens immobiliers.
+Dans ce cadre, le projet **DATAImmo** vise à moderniser et structurer la base de données permettant
+l’analyse du marché immobilier français.
 
-Laplace Immo souhaite développer un modèle prédictif capable d’estimer le prix de vente des biens immobiliers.  
-Dans ce cadre, le projet DATAImmo vise à moderniser la base de données utilisée pour collecter, structurer et analyser les transactions immobilières en France.
+La mission confiée consistait à concevoir une base de données relationnelle normalisée (3NF),
+intégrant des données de transactions, de population et de référentiel géographique,
+afin de faciliter les analyses décisionnelles et statistiques.
 
-La CTO, Clara Daucourt, a confié la conception d’un schéma relationnel complet, conforme à la 3e forme normale (3NF), intégrant de nouvelles sources de données, ainsi que la création de la base de données opérationnelle.
+---
 
 ## 2. Données utilisées
+Les données proviennent exclusivement de sources **open data officielles** :
 
-Les fichiers fournis contiennent :
-- Données DVF (Demandes de valeurs foncières – open data)
-- Données INSEE (recensements de population)
-- Données géographiques (communes, départements, régions, aires urbaines, etc.)
+- **DVF** : transactions immobilières
+- **INSEE** : données de population
+- **data.gouv.fr** : référentiel géographique (communes, départements, régions)
 
-Un dictionnaire des données devait être créé pour chacune de ces sources à partir du template fourni.
+Un **dictionnaire de données** a été réalisé pour chacune de ces sources.
+
+---
 
 ## 3. Travaux réalisés
 
 ### 3.1. Dictionnaire des données
-- Description détaillée des variables principales  
-- Normalisation des noms et types  
-- Vérification de la conformité RGPD (suppression/absence de données personnelles)
+- Description détaillée des variables clés
+- Normalisation des noms et des types
+- Vérification de la conformité **RGPD**  
+  (absence de données personnelles identifiables)
 
-### 3.2. Schéma relationnel normalisé (3NF)
-- Modification du schéma pour intégrer les tables Population et Région  
-- Identification pour chaque table :
-  - clé primaire  
-  - clés étrangères  
-  - cardinalités et relations avec les autres tables  
-- Réalisation du schéma sous l’outil de modélisation choisi (SQL Power Architect / Draw.io / Looping)
+### 3.2. Modélisation relationnelle (3NF)
+- Refonte du schéma pour intégrer les dimensions **Population** et **Région**
+- Définition des :
+  - clés primaires
+  - clés étrangères
+  - relations et cardinalités
+- Conception du schéma relationnel à l’aide d’un outil de modélisation dédié
 
-### 3.3. Création de la base de données
-- Implémentation de l’ensemble des tables normalisées  
-- Typage strict des colonnes  
-- Mise en place des contraintes (PRIMARY KEY, FOREIGN KEY)  
-- Création des relations inter-tables  
-- Chargement intégral des données dans la base  
-- Vérification de l’intégrité et de la complétude du chargement
+### 3.3. Implémentation de la base de données
+- Création des tables normalisées
+- Mise en place des contraintes d’intégrité
+- Chargement et contrôle des données
+- Validation de la cohérence et de la complétude des tables
 
-## 4. Livrables obtenus
+---
 
-- Dictionnaire des données complet  
-- Schéma relationnel finalisé et conforme 3NF  
-- Base de données opérationnelle et entièrement chargée  
-- Tables avec clés primaires, clés étrangères et contraintes  
-- Structure prête pour exploitation analytique et modélisation prédictive
+## 4. Analyses SQL réalisées
+La base de données a été exploitée à travers des **requêtes SQL avancées** afin de produire
+des indicateurs utiles à l’analyse du marché immobilier, notamment :
 
+- Volume de ventes par période, type de bien et zone géographique
+- Prix moyen au m² par commune, département et région
+- Comparaison des prix selon la surface et le nombre de pièces
+- Analyse des ventes rapportées à la population
+- Évolution temporelle du nombre de transactions
 
+👉 Les requêtes sont disponibles dans le dossier `sql/analysis_queries.sql`.
 
+---
 
+## 5. Livrables
+- Dictionnaire des données complet
+- Schéma relationnel finalisé et conforme 3NF
+- Base de données opérationnelle (SQLite)
+- Scripts SQL documentés
+- Structure prête pour analyses avancées et modélisation prédictive
+
+---
+
+## 6. Compétences mobilisées
+- Modélisation de bases de données relationnelles (3NF)
+- SQL avancé (JOIN, sous-requêtes, CTE, fonctions analytiques)
+- Analyse exploratoire de données immobilières
+- Qualité des données et conformité RGPD
