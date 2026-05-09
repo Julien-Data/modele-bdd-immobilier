@@ -188,3 +188,52 @@ SELECT
 FROM top3
 WHERE rn <= 3
 ORDER BY dep_code, valeur_moyenne DESC;
+
+
+
+/* =====================================================
+INSIGHT FINAL : STRUCTURE DU MARCHÉ IMMOBILIER
+
+Objectif :
+Analyser la concentration des transactions immobilières
+selon les communes (logique de type Pareto).
+
+===================================================== */
+
+WITH ventes_par_commune AS (
+    SELECT 
+        c.com_nom AS commune,
+        COUNT(*) AS nb_ventes
+    FROM vente v
+    JOIN bien b ON v.Id_bien = b.Id_bien
+    JOIN commune c ON b.id_codedep_codecommune = c.id_codedep_codecommune
+    GROUP BY c.com_nom
+),
+
+classement AS (
+    SELECT 
+        commune,
+        nb_ventes,
+        SUM(nb_ventes) OVER (ORDER BY nb_ventes DESC) AS cumul_ventes,
+        SUM(nb_ventes) OVER () AS total_ventes
+    FROM ventes_par_commune
+)
+
+SELECT 
+    CASE 
+        WHEN cumul_ventes <= total_ventes * 0.1 THEN 'Top 10%'
+        WHEN cumul_ventes <= total_ventes * 0.2 THEN 'Top 20%'
+        WHEN cumul_ventes <= total_ventes * 0.5 THEN 'Top 50%'
+        ELSE 'Autres communes'
+    END AS segment_marche,
+    
+    COUNT(*) AS nb_communes,
+    
+    ROUND(
+        MAX(cumul_ventes) * 100.0 / MAX(total_ventes),
+        2
+    ) AS part_cumulee_pourcent
+
+FROM classement
+GROUP BY segment_marche
+ORDER BY part_cumulee_pourcent;
