@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: dataimmo
+    schema: projet_sql2
+    description: "Base DVF immobilière contenant les transactions et caractéristiques des biens"
+
+    tables:
+
+      - name: vente
+        description: "Table des transactions immobilières (ventes de biens)"
+        columns:
+          - name: Id_vente
+            description: "Identifiant unique de la vente"
+            tests:
+              - not_null
+              - unique
+
+          - name: Id_bien
+            description: "Référence du bien vendu"
+            tests:
+              - not_null
+
+      - name: bien
+        description: "Table descriptive des biens immobiliers"
+        columns:
+          - name: Id_bien
+            description: "Identifiant unique du bien immobilier"
+            tests:
+              - not_null
+              - unique
+
+          - name: Type_local
+            description: "Typologie du bien (Appartement ou Maison)"
+            tests:
+              - accepted_values:
+                  values: ['Appartement', 'Maison']
