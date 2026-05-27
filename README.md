@@ -50,6 +50,16 @@ Un dictionnaire de données détaillé a été réalisé pour chacune des source
 - Analyses avancées avec CTE et fonctions analytiques  
 - Scripts SQL disponibles dans `sql/analysis_queries.sql`  
 
+### 3.6. Couche de validation et documentation avec dbt
+- Ajout de dbt comme couche de validation et de documentation sur la base existante
+- Définition des sources MySQL
+- Mise en place de tests de qualité :
+  - not_null (intégrité des clés)
+  - unique (unicité des identifiants)
+  - accepted_values (contrôle de la typologie)
+- Génération de documentation automatique (dbt docs)
+- Couche de data quality indépendante sans modification de la base
+
 ## 4. Livrables
 - Dictionnaire des données complet  
 - Schéma relationnel finalisé (PDF)  
